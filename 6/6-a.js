@@ -2,7 +2,7 @@
 const readFile = require("fs").readFileSync;
 let fish = readFile("input", "utf-8").split(",").map(_ => parseInt(_));
 
-const days = 80;
+const days = 256;
 const cycle = 6;
 
 for (let i = 0; i < days; i++) {

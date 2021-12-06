@@ -10,7 +10,7 @@ initial.forEach(_ => fishes[_]++);
 
 for (let i = 0; i < days; i++) {
     const newFish = fishes[0];
-    fishes.push(fishes.shift());
+    fishes.push(fishes.shift());    //Cycles array elements
     fishes[cycle] += newFish;
 }
 
