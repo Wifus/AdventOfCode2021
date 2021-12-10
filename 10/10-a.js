@@ -2,42 +2,26 @@
 const readFile = require("fs").readFileSync;
 const file = readFile("input", "utf-8").split("\n").map(_ => _.trim());
 const pairs = {
-    "(" : ")",
-    "{" : "}" ,
-    "[" : "]",
-    "<" : ">"
-}
-const points = {
+    "(": ")",
+    "{": "}" ,
+    "[": "]",
+    "<": ">"
+}, points = {
     ")": 3,
     "]": 57,
     "}": 1197,
     ">": 25137
-}
-let invalid = [];
+}, invalid = [];
 
-/**
- * 
- * @param {string} line 
- * @returns 
- */
+/**@param {string} line*/
 function getInvalidCharacter(line) {
     let stack = [];
     for(let char of line) {
-        let pair = pairs[char];
-        if (pair) stack.push(char);
-        else {
-            if (char != pairs[stack.pop()]) return char;
-        }
+        if (pairs[char]) stack.push(char);
+        else if (char != pairs[stack.pop()]) return char;
     }
-
-    // if (stack.length > 0) return false;
-
-    // return true;
 }
 
-for(let line of file) {
-    invalid.push(getInvalidCharacter(line))
-}
-
+file.forEach(_ => invalid.push(getInvalidCharacter(_)));
 
 console.log(invalid.reduce((acc, cur) => acc += points[cur] ?? 0, 0));
