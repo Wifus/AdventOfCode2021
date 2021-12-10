@@ -5,22 +5,13 @@ const pairs = {"(" : ")", "{" : "}" , "[" : "]", "<" : ">"},
       points = {")": 1, "]": 2, "}": 3, ">": 4},
       closing = [];
 
-/**@param {string} line*/
-function getLineCompletion(line) {
+file.forEach(line => {
     const stack = [];
     for(let char of line) {
         if (pairs[char]) stack.push(char);
-        else if (char != pairs[stack.pop()]) return 0;
+        else if (char != pairs[stack.pop()]) return;
     }
-
-    if (stack.length) return stack.reduceRight((_, char) => _ * 5 + points[pairs[char]], 0);
-    else return 0;
-}
-
-file.forEach(line => {
-    const score = getLineCompletion(line); 
-    score && closing.push(score)
+    closing.push(stack.reduceRight((_, char) => _ * 5 + points[pairs[char]], 0));
 });
 
-closing.sort((a, b) => a - b);
-console.log(closing[Math.floor(closing.length/2)]);
+console.log(closing.sort((a, b) => a - b)[Math.floor(closing.length/2)]);
